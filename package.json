@@ -9,9 +9,17 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@octokit/auth-app": "^8.1.2",
+    "@tailwindcss/typography": "^0.5.19",
+    "@vercel/kv": "^3.0.0",
+    "github-markdown-css": "^5.8.1",
     "next": "16.0.3",
+    "octokit": "^5.0.5",
     "react": "19.2.0",
-    "react-dom": "19.2.0"
+    "react-dom": "19.2.0",
+    "react-markdown": "^10.1.0",
+    "remark-comment": "^1.0.0",
+    "remark-gfm": "^4.0.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
