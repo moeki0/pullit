@@ -12,20 +12,35 @@
     "@octokit/auth-app": "^8.1.2",
     "@tailwindcss/typography": "^0.5.19",
     "@vercel/kv": "^3.0.0",
+<<<<<<< Updated upstream
+=======
+    "diff": "^8.0.2",
+>>>>>>> Stashed changes
     "github-markdown-css": "^5.8.1",
     "next": "16.0.3",
     "octokit": "^5.0.5",
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "react-markdown": "^10.1.0",
+<<<<<<< Updated upstream
     "remark-comment": "^1.0.0",
     "remark-gfm": "^4.0.1"
+=======
+    "react-syntax-highlighter": "^16.1.0",
+    "react-tooltip": "^5.30.0",
+    "rehype-raw": "^7.0.0",
+    "remark-comment": "^1.0.0",
+    "remark-gfm": "^4.0.1",
+    "swr": "^2.3.6",
+    "use-debounce": "^10.0.6"
+>>>>>>> Stashed changes
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/react-syntax-highlighter": "^15.5.13",
     "eslint": "^9",
     "eslint-config-next": "16.0.3",
     "tailwindcss": "^4",

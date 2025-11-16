@@ -29,7 +29,13 @@ export function Search() {
     setResult(res);
     return res;
   });
-  const search = ({ query, retry = 0 }: { query: string; retry?: number }) => {
+  const search = async ({
+    query,
+    retry = 0,
+  }: {
+    query: string;
+    retry?: number;
+  }) => {
     try {
       setResult(
         data.filter((i: Pull) =>
@@ -37,7 +43,7 @@ export function Search() {
         )
       );
     } catch (e) {
-      sleep(500);
+      await sleep(500);
       search({ query, retry: retry + 1 });
     }
   };
