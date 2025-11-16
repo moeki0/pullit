@@ -105,7 +105,7 @@ export function Reviews({ visible }) {
               );
             })
             .map((c: any) => (
-              <div key={c.id}>
+              <>
                 {!c.in_reply_to_id && (
                   <div
                     className="bg-white border border-gray-200 rounded text-sm p-2 "
@@ -155,7 +155,11 @@ export function Reviews({ visible }) {
                             ...props
                           }: any) {
                             if (!children?.includes("\n")) {
-                              return;
+                              return (
+                                <code className={className} {...props}>
+                                  {children}
+                                </code>
+                              );
                             }
                             const rangeStart =
                               c.diff_hunk.split("\n")[0].match(/^@@ -(\d+)/) &&
@@ -250,7 +254,7 @@ export function Reviews({ visible }) {
                     </div>
                   </div>
                 )}
-              </div>
+              </>
             ))}
         </div>
       )}

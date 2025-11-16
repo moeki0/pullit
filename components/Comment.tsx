@@ -44,7 +44,10 @@ export function Comment({ c, full }: { c; full: boolean }) {
   );
 
   return (
-    <div key={c.id} className="bg-white p-3 rounded border border-gray-200 text-sm">
+    <div
+      key={c.id}
+      className="bg-white p-3 rounded border border-gray-200 text-sm"
+    >
       <div className="flex gap-2 items-center mb-1">
         <Image
           className="w-5 h-5 rounded-full"
@@ -69,11 +72,20 @@ export function Comment({ c, full }: { c; full: boolean }) {
               )}
             </a>
           ) : (
-            <a
-              href={`/${owner}/${repo}/pull/${number}/comments/${c.id}`}
-              className="underline"
-            >
-              View all
+            !full && (
+              <a
+                href={`/${owner}/${repo}/pull/${number}/comments/${c.id}`}
+                className="underline"
+              >
+                View all
+              </a>
+            )
+          )}
+        </div>
+        <div className="text-xs text-gray-400 underline">
+          {full && (
+            <a href={c.html_url} target="_blank">
+              View on GitHub
             </a>
           )}
         </div>
