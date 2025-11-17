@@ -87,6 +87,22 @@ const commentsFetcher = async ({
   return json.data;
 };
 
+const reviewCommentsFetcher = async ({
+  owner,
+  repo,
+  number,
+}: {
+  owner: string;
+  repo: string;
+  number: string;
+}) => {
+  const res = await fetch(
+    `/api/${owner}/${repo}/pulls/${number}/reviewComments`
+  );
+  const json = await res.json();
+  return json.data;
+};
+
 interface Pull {
   assignees: { login: string }[];
   number: number;
@@ -99,6 +115,7 @@ export function Pull() {
     repo: string;
     number: string;
   }>();
+
   const [editingTitle, setEditingTitle] = useState("");
   const { data } = useSWR(
     `/api/${owner}/${repo}/pulls/${number}`,
@@ -133,6 +150,11 @@ export function Pull() {
     return j - i;
   });
 
+  const { data: reviewComments } = useSWR(
+    `/api/${owner}/${repo}/pulls/${number}/reviewComments`,
+    async () => await reviewCommentsFetcher({ owner, repo, number })
+  );
+
   const title = editingTitle || data?.title;
 
   return (
@@ -146,27 +168,46 @@ export function Pull() {
                 className="w-full font-bold mb-3"
                 onChange={(e) => setEditingTitle(e.target.value)}
               />
-              <div className="flex gap-4 mb-3 items-center text-sm">
+              <div className="flex gap-2 mb-3 items-center text-sm">
                 <div>
-                  <button onClick={() => setMode("comments")} className="">
+                  <button
+                    onClick={() => setMode("comments")}
+                    className={`hover:bg-gray-200 cursor-pointer rounded py-1 px-2 ${
+                      mode === "comments" && "bg-gray-200"
+                    }`}
+                  >
                     Comments
                   </button>
                 </div>
+                {reviewComments?.length > 0 && (
+                  <div>
+                    <button
+                      onClick={() => setMode("reviewComments")}
+                      className={`hover:bg-gray-200 cursor-pointer rounded py-1 px-2 ${
+                        mode === "reviewComments" && "bg-gray-200"
+                      }`}
+                    >
+                      Review Comments
+                    </button>
+                  </div>
+                )}
                 <div>
                   <button
-                    onClick={() => setMode("reviewComments")}
-                    className=""
+                    className={`hover:bg-gray-200 cursor-pointer rounded py-1 px-2 ${
+                      mode === "files" && "bg-gray-200"
+                    }`}
+                    onClick={() => setMode("files")}
                   >
-                    Review Comments
-                  </button>
-                </div>
-                <div>
-                  <button className="" onClick={() => setMode("files")}>
                     Files
                   </button>
                 </div>
                 <div>
-                  <button className="" onClick={() => setMode("description")}>
+                  <button
+                    className={`hover:bg-gray-200 cursor-pointer rounded py-1 px-2 ${
+                      mode === "description" && "bg-gray-200"
+                    }`}
+                    onClick={() => setMode("description")}
+                  >
                     Description
                   </button>
                 </div>
@@ -174,7 +215,10 @@ export function Pull() {
             </>
           )}
           <Files visible={mode === "files"} />
-          <Reviews visible={mode === "reviewComments"} />
+          <Reviews
+            visible={mode === "reviewComments"}
+            reviewComments={reviewComments}
+          />
           <Description visible={mode === "description"} />
           <div className={` ${mode !== "comments" ? "hidden" : ""}`}>
             {items && (
@@ -193,11 +237,11 @@ export function Pull() {
                   <a
                     href={commit.html_url}
                     target="_blank"
-                    className="flex gap-3 py-1"
+                    className="flex gap-3 items-center py-1"
                     key={commit.sha}
                   >
                     <code className="text-xs">{commit.sha.slice(0, 7)}</code>
-                    <div className="text-sm">{commit.commit.message}</div>
+                    <div className="text-sm truncate">{commit.commit.message}</div>
                   </a>
                 ))}
               </div>

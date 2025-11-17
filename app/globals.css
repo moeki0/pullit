@@ -1,2 +1,54 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
+
+.markdown {
+  font-size: 14px;
+}
+
+.markdown * {
+  word-break: break-all;
+}
+
+.markdown a {
+  color: cornflowerblue;
+  text-decoration: underline;
+}
+
+.markdown p {
+  margin: 10px 0;
+}
+
+.markdown h2,
+.markdown h3 {
+  border-bottom: 1px solid #ddd;
+  font-weight: bold;
+  margin-top: 20px;
+  padding-bottom: 2px;
+  margin-bottom: 10px;
+}
+
+.markdown h2 {
+  font-size: 17px;
+}
+
+.markdown h3 {
+  font-size: 15px;
+}
+
+.markdown ul {
+  list-style-type: disc;
+}
+
+.markdown li {
+  margin-left: 20px;
+}
+
+.markdown code {
+  background: #eee;
+  padding: 1px 4px;
+  border-radius: 5px;
+}
+
+.markdown :is(dir, menu, ol, ul) ul {
+  list-style-type: circle;
+}

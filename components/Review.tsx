@@ -98,7 +98,7 @@ export function Review({ review }) {
                           </a>
                         </div>
                       </div>
-                      <div className="ml-7 break-all [&_a]:underline! [&_a]:text-sky-600!">
+                      <div className="ml-7 break-all markdown">
                         <Markdown
                           remarkPlugins={[remarkGfm]}
                           components={{

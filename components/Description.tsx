@@ -41,7 +41,7 @@ export function Description({ visible }) {
   }
 
   return (
-    <div className="bg-white border border-gray-200 rounded p-3 prose max-w-full">
+    <div className="bg-white border border-gray-200 rounded p-3 markdown max-w-full">
       <Markdown remarkPlugins={[remarkGfm]}>{data?.body}</Markdown>
     </div>
   );

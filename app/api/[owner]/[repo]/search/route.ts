@@ -13,6 +13,7 @@ export async function GET(
     await search.issuesAndPullRequests({
       q: `repo:${owner}/${repo} is:pr ${q as string}`,
       sort: "updated",
+      per_page: 100,
     })
   ).data;
   return Response.json({ result });

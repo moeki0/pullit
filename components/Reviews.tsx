@@ -44,50 +44,20 @@ const reviewsFetcher = async ({
   return json.data;
 };
 
-const reviewCommentsFetcher = async ({
-  owner,
-  repo,
-  number,
-}: {
-  owner: string;
-  repo: string;
-  number: string;
-}) => {
-  const res = await fetch(
-    `/api/${owner}/${repo}/pulls/${number}/reviewComments`
-  );
-  const json = await res.json();
-  return json.data;
-};
-
-export function Reviews({ visible }) {
+export function Reviews({ visible, reviewComments }) {
   const { owner, repo, number } = useParams<{
     owner: string;
     repo: string;
     number: string;
   }>();
-  const [editingTitle, setEditingTitle] = useState("");
-  const { data, mutate } = useSWR(
+  const { data } = useSWR(
     `/api/${owner}/${repo}/pulls/${number}`,
     async () => await fetcher({ owner, repo, number })
-  );
-  const update = async () => {
-    await fetch(`/api/${owner}/${repo}/pulls/${number}`, {
-      method: "POST",
-      body: JSON.stringify({ title: editingTitle }),
-    });
-    await mutate();
-  };
-  const { data: comment } = useSWR(
-    `/api/${owner}/${repo}/pulls/${number}/reviewComments`,
-    async () => await reviewCommentsFetcher({ owner, repo, number })
   );
   const { data: reviews } = useSWR(
     `/api/${owner}/${repo}/pulls/${number}/reviews`,
     async () => await reviewsFetcher({ owner, repo, number })
   );
-
-  const title = editingTitle || data?.title;
 
   if (!visible) {
     return null;
@@ -95,9 +65,9 @@ export function Reviews({ visible }) {
 
   return (
     <>
-      {reviews && comment && (
+      {reviews && reviewComments && (
         <div className="flex flex-col gap-2">
-          {comment
+          {reviewComments
             .filter((c) => {
               return (
                 reviews.find((r) => r.id === c.pull_request_review_id).body
